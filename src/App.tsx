@@ -3,20 +3,22 @@ import './App.css';
 import 'bulma/css/bulma.css';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { ChangeEvent } from 'react';
+import { ChangeEventHandler } from 'react';
+import { BNode } from './blockchain/BNode';
 
 const logo = require('./logo.svg');
 
 @observer
 class App extends React.Component {
-  @observable name: string = 'asd';
+  @observable private nodes: BNode[];
 
   constructor(props: any) {
     super(props);
+    this.nodes = [new BNode({nodeId: 0}), new BNode({nodeId: 1})];
   }
 
-  public nameChanged = (e: ChangeEvent<HTMLInputElement>) => {
-    this.name = e.target.value;
+  public nameChanged:ChangeEventHandler<HTMLInputElement> = (e) => {
+    //let text = e.target.value;
   }
 
   render() {
@@ -32,6 +34,11 @@ class App extends React.Component {
             <h1>
               Nodes
             </h1>
+            <ul>
+              {this.nodes.map((n) => 
+                <li>Node #{n.nodeId}</li>
+              )}
+            </ul>
           </div>
           <div className="column middle is-three-fifths">
             <h1>Blocks</h1>
