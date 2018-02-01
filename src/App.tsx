@@ -3,7 +3,6 @@ import './App.css';
 import 'bulma/css/bulma.css';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { ChangeEventHandler } from 'react';
 import { BStore, Node } from './blockchain/BStore';
 import { setTimeout } from 'timers';
 import { NodeView } from './blockchain/NodeView';
@@ -21,11 +20,6 @@ class App extends React.Component {
     setTimeout(() => {
       this.bStore.Nodes.push(new Node(1));
     }, 1000);
-  }
-
-
-  public nameChanged:ChangeEventHandler<HTMLInputElement> = (e) => {
-    //let text = e.target.value;
   }
 
   render() {
