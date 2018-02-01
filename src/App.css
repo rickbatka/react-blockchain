@@ -26,3 +26,24 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+#main-content{
+  height:800px;
+}
+
+.left-sidebar{
+  border-right: 1px solid lightgray;
+}
+
+.right-sidebar{
+  border-left: 1px solid lightgray;
+}
+
+#footer-content{
+  border-top: 1px solid lightgray;
+  width: 100%;
+  height: 100px;
+  overflow-y: scroll;
+  margin: 0;
+  padding: 10px;
+}
