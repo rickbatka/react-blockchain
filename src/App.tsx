@@ -4,18 +4,25 @@ import 'bulma/css/bulma.css';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { ChangeEventHandler } from 'react';
-import { BNode } from './blockchain/BNode';
+import { BStore, Node } from './blockchain/BStore';
+import { setTimeout } from 'timers';
+import { NodeView } from './blockchain/NodeView';
 
 const logo = require('./logo.svg');
 
 @observer
 class App extends React.Component {
-  @observable private nodes: BNode[];
+  @observable private bStore: BStore;
 
   constructor(props: any) {
     super(props);
-    this.nodes = [new BNode({nodeId: 0}), new BNode({nodeId: 1})];
+    this.bStore = new BStore();
+
+    setTimeout(() => {
+      this.bStore.Nodes.push(new Node(1));
+    }, 1000);
   }
+
 
   public nameChanged:ChangeEventHandler<HTMLInputElement> = (e) => {
     //let text = e.target.value;
@@ -26,7 +33,7 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React, {name}</h1>
+          <h1 className="App-title">Blockchain demo{name}</h1>
         </header>
         
         <div className="columns is-marginless" id="main-content">
@@ -35,8 +42,8 @@ class App extends React.Component {
               Nodes
             </h1>
             <ul>
-              {this.nodes.map((n) => 
-                <li>Node #{n.nodeId}</li>
+              {this.bStore.Nodes.map(n => 
+                <NodeView node={n} />
               )}
             </ul>
           </div>
