@@ -1,9 +1,9 @@
-export interface IBlock{
+export interface Block{
     hash: string | null;
     timestamp: number; //ms since epoch
 }
 
-class Block implements IBlock{
+class block implements Block{
     public hash: string | null;
     public timestamp: number; //ms since epoch
 
@@ -17,6 +17,6 @@ class Block implements IBlock{
     }
 }
 
-export function genesisBlock() {
-    return new Block(0, "0", "genesis");
+export function genesisBlock(): Block {
+    return new block(0, "0", "genesis");
 }

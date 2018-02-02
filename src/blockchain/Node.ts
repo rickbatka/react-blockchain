@@ -1,15 +1,16 @@
 import { observable } from 'mobx';
 import { Network } from './Network';
-import { IBlock, genesisBlock } from './IBlock';
+import { Block, genesisBlock } from './Block';
 
-export interface INode{
+export interface BNode{
     nodeId: number;
-    blocks: IBlock[];
+    blocks: Block[];
+    initialized: Promise<boolean>;
 }
 
-export class node implements INode{
+export class node implements BNode{
     @observable public nodeId: number;
-    @observable public blocks: IBlock[];
+    @observable public blocks: Block[];
     public initialized: Promise<boolean>;
 
     constructor(nodeId: number){
@@ -33,17 +34,21 @@ export class node implements INode{
         return true;
     };
 
-    private static getBlockchain = (nodes: INode[]) => {
+    private static getBlockchain = (nodes: BNode[]) => {
         // todo currently just takes the longest, should also validate...
         let longestValidChain = nodes
             .sort((a, b) => a.blocks.length < b.blocks.length ? -1 : 1)
             [0].blocks;
 
         // clone, so we don't have multiple nodes accessing the same blockchain in memory - the perils of not having a real network seam...
-        return longestValidChain.map(block => <IBlock>{...block});
+        return longestValidChain.map(block => <Block>{...block});
     }
 
     public logAction = (text: string) => {
         console.log(`Node ${this.nodeId}: ${text}`);
     }
+}
+
+export function createNode(nodeId: number): BNode{
+    return new node(nodeId);
 }

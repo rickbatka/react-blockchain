@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { INode } from './INode';
+import { BNode } from './Node';
 
 @observer
-export class NodeView extends React.Component<{node: INode}> {
+export class NodeView extends React.Component<{node: BNode}> {
 
-  constructor(props:{node: INode}){
+  constructor(props:{node: BNode}){
     super(props);
   }
 
