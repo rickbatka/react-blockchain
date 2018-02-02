@@ -3,7 +3,6 @@ import './App.css';
 import 'bulma/css/bulma.css';
 import { observer } from 'mobx-react';
 import { Network } from './blockchain/Network';
-import { setTimeout } from 'timers';
 import { NodeView } from './blockchain/NodeView';
 
 const logo = require('./logo.svg');
@@ -13,10 +12,8 @@ class App extends React.Component {
 
   constructor(props: any) {
     super(props);
-
-    setTimeout(() => {
-      Network.addNode();
-    }, 1000);
+    Network.addNode();
+    window.setTimeout(Network.addNode, 500);
   }
 
   render() {
@@ -33,8 +30,8 @@ class App extends React.Component {
               Nodes
             </h1>
             <ul>
-              {Network.nodes.map(n => 
-                <NodeView node={n} />
+              {Network.queryNodes.get().map(n => 
+                <NodeView node={n} key={n.nodeId} />
               )}
             </ul>
           </div>
