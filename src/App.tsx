@@ -1,9 +1,8 @@
 import * as React from 'react';
 import './App.css';
 import 'bulma/css/bulma.css';
-import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { BStore, Node } from './blockchain/BStore';
+import { Network } from './blockchain/Network';
 import { setTimeout } from 'timers';
 import { NodeView } from './blockchain/NodeView';
 
@@ -11,14 +10,12 @@ const logo = require('./logo.svg');
 
 @observer
 class App extends React.Component {
-  @observable private bStore: BStore;
 
   constructor(props: any) {
     super(props);
-    this.bStore = new BStore();
 
     setTimeout(() => {
-      this.bStore.Nodes.push(new Node(1));
+      Network.addNode();
     }, 1000);
   }
 
@@ -36,7 +33,7 @@ class App extends React.Component {
               Nodes
             </h1>
             <ul>
-              {this.bStore.Nodes.map(n => 
+              {Network.nodes.map(n => 
                 <NodeView node={n} />
               )}
             </ul>
