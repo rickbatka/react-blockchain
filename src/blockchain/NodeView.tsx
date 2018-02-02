@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { Node } from './BStore'
+import { Node } from './BStore';
+
 @observer
 export class NodeView extends React.Component<{node: Node}> {
 
@@ -11,7 +12,7 @@ export class NodeView extends React.Component<{node: Node}> {
   render() {
     return (
       <li className="node">
-        Node here, id {this.props.node.nodeId}.
+        Node {this.props.node.nodeId}.
       </li>
     );
   }

@@ -47,3 +47,14 @@
   margin: 0;
   padding: 10px;
 }
+
+.subheader{
+  height: 30px;
+  border-bottom: 1px solid lightgray;
+}
+
+li.node{
+  height:75px;
+  border-bottom: 1px solid lightgray;
+  padding: 15px;
+}

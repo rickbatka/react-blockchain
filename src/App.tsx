@@ -32,7 +32,7 @@ class App extends React.Component {
         
         <div className="columns is-marginless" id="main-content">
           <div className="column left-sidebar">
-            <h1>
+            <h1 className="subheader">
               Nodes
             </h1>
             <ul>
@@ -42,10 +42,10 @@ class App extends React.Component {
             </ul>
           </div>
           <div className="column middle is-three-fifths">
-            <h1>Blocks</h1>
+            <h1 className="subheader">Blocks</h1>
           </div>
           <div className="column right-sidebar">
-            <h1>
+            <h1 className="subheader">
               Miners
             </h1>
           </div>
