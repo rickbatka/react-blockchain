@@ -1,5 +1,6 @@
 import { observable, computed } from 'mobx';
 import { BNode, createNode } from './Node';
+import { Block } from './Block';
 
 export module Network{
     let nodes : BNode[] = observable([]);
@@ -14,6 +15,12 @@ export module Network{
             console.log(`Network: node ${newIndex} online.`);
             nodes.push(newNode);
         });
+    };
+
+    export const submitMinedBlock = (block: Block, fromNodeId: number) => {
+        for (let node of nodes.filter(n => n.nodeId != fromNodeId)) {
+            node.onBlockMined(block);
+        }
     };
 }
 

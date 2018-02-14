@@ -1,11 +1,12 @@
 import { observable } from 'mobx';
 import { Network } from './Network';
-import { Block, genesisBlock } from './Block';
+import { Block, genesisBlock, validateHash } from './Block';
 
 export interface BNode{
     nodeId: number;
     blocks: Block[];
     initialized: Promise<boolean>;
+    onBlockMined: (block: Block) => boolean;
 }
 
 export class node implements BNode{
@@ -31,6 +32,7 @@ export class node implements BNode{
         }
 
         this.logAction(`online. chain height ${this.blocks.length}.`);
+
         return true;
     };
 
@@ -47,6 +49,29 @@ export class node implements BNode{
     public logAction = (text: string) => {
         console.log(`Node ${this.nodeId}: ${text}`);
     }
+
+    public onBlockAdded = (block: Block) => {
+        if (block.index == this.blocks.length + 1 && block.previousHash == this.blocks[this.blocks.length].hash) {
+            this.blocks.push(<Block>{ ...block });
+            return true;
+        }
+
+        return false;
+    };
+
+    public onBlockMined = (block: Block) => {
+        let foundBlock = this.blocks.find(b => b.index == block.index
+                && b.data == block.data
+                && b.previousHash == block.previousHash);
+
+        if (foundBlock && validateHash(block))
+        {
+            foundBlock.hash = block.hash;
+            foundBlock.isValid = true;
+            return true;
+        }
+        return false;
+    };
 }
 
 export function createNode(nodeId: number): BNode{

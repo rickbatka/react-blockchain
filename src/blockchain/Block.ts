@@ -1,4 +1,6 @@
-export interface Block{
+import { observable } from 'mobx';
+
+export interface Block {
     hash: string | null;
     index: number;
     data: string;
@@ -8,9 +10,9 @@ export interface Block{
 }
 
 class block implements Block{
-    public hash: string | null;
+    @observable public hash: string | null;
+    @observable public isValid: boolean = false;
     public timestamp: number; //ms since epoch
-    public isValid: boolean = false;
 
     constructor(
         public index: number, 
@@ -24,4 +26,9 @@ class block implements Block{
 
 export function genesisBlock(): Block {
     return new block(0, "0", "genesis");
+}
+
+export function validateHash(block: Block): boolean {
+    //TODO 
+    return true;
 }

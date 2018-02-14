@@ -1,7 +1,8 @@
 import * as React from 'react';
 import './App.css';
 import 'bulma/css/bulma.css';
-import { observer } from 'mobx-react';
+import { action } from 'mobx';
+import { observer} from 'mobx-react';
 import { Network } from './blockchain/Network';
 import { NodeView } from './blockchain/NodeView';
 import { BlockView } from './blockchain/BlockView';
@@ -15,7 +16,23 @@ class App extends React.Component {
         super(props);
         Network.addNode();
         window.setTimeout(Network.addNode, 500);
+        window.setTimeout(() => {
+            this.testBlockAdd();
+        }, 1500);
+
     }
+
+    @action.bound
+    private testBlockAdd = () => {
+        Network.submitMinedBlock({
+            data: "genesis",
+            index: 0,
+            previousHash: "0",
+            timestamp: new Date().valueOf(),
+            hash: "fakehash",
+            isValid: true
+        }, 3);
+    };
 
     render() {
         let allNodes = Network.queryNodes.get();
