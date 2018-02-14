@@ -1,60 +1,116 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
 }
 
 .App-title {
-  font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 .App-intro {
-  font-size: large;
+    font-size: large;
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-#main-content{
-  height:800px;
+#main-content {
+    height: 800px;
 }
 
-.left-sidebar{
-  border-right: 1px solid lightgray;
+.left-sidebar {
+    border-right: 1px solid lightgray;
 }
 
-.right-sidebar{
-  border-left: 1px solid lightgray;
+.right-sidebar {
+    border-left: 1px solid lightgray;
 }
 
-#footer-content{
-  border-top: 1px solid lightgray;
-  width: 100%;
-  height: 100px;
-  overflow-y: scroll;
-  margin: 0;
-  padding: 10px;
+#footer-content {
+    border-top: 1px solid lightgray;
+    width: 100%;
+    height: 100px;
+    overflow-y: scroll;
+    margin: 0;
+    padding: 10px;
 }
 
-.subheader{
-  height: 30px;
-  border-bottom: 1px solid lightgray;
+.subheader {
+    height: 30px;
+    border-bottom: 1px solid lightgray;
 }
 
-li.node{
-  height:75px;
-  border-bottom: 1px solid lightgray;
-  padding: 15px;
+li.node, ul.blockchain li {
+    height: 100px;
+    padding: 8px;
+    margin-top: 5px;
+}
+
+li.node {
+    border-bottom: 1px solid lightgray;
+}
+
+ul.blockchain {
+    display: inline;
+}
+
+ul.blockchain li {
+    width: 250px;
+    text-align: left;
+    font-size: 11px;
+    font-family: monospace;
+}
+
+
+
+ul.blockchain li p.data {
+    font-weight: bold;
+    color: white;
+    padding: 15px 0 0 10px;
+    position: relative;
+}
+
+ul.blockchain li p.data:before {
+    content: 'DATA';
+    font-family:arial;
+    font-size: 8px;
+    color: #fefefe;
+    position: absolute;
+    top:0;
+    left: 2px;
+    text-decoration: underline;
+}
+
+ul.blockchain li.valid {
+    border: 1px solid mediumseagreen;
+}
+
+ul.blockchain li.invalid {
+    border: 1px solid indianred;
+}
+
+ul.blockchain li.valid p.data {
+    background: mediumseagreen;
+}
+
+ul.blockchain li.invalid p.data {
+    background: indianred;
 }

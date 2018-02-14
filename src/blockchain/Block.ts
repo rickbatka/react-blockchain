@@ -1,11 +1,16 @@
 export interface Block{
     hash: string | null;
+    index: number;
+    data: string;
+    previousHash: string;
     timestamp: number; //ms since epoch
+    isValid: boolean;
 }
 
 class block implements Block{
     public hash: string | null;
     public timestamp: number; //ms since epoch
+    public isValid: boolean = false;
 
     constructor(
         public index: number, 

@@ -12,7 +12,7 @@ export class NodeView extends React.Component<{node: BNode}> {
   render() {
     return (
       <li className="node">
-        Node {this.props.node.nodeId}.
+        Node {this.props.node.nodeId}
       </li>
     );
   }
