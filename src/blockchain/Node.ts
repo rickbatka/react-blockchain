@@ -25,7 +25,9 @@ export class node implements BNode{
         let allNodes = Network.queryNodes.get();
         if(allNodes.length == 0){
             this.logAction(`...no nodes. initiating genesis block...`);
-            this.blocks = [genesisBlock()];
+            let genesis = genesisBlock();
+            this.blocks = [genesis];
+            Network.broadcastUnminedBlock(genesis, this.nodeId);
         }else{
             this.logAction(`...found ${allNodes.length} nodes, finding longest valid blockchain...`);
             this.blocks = node.getBlockchain(allNodes); 
