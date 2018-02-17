@@ -5,6 +5,7 @@ import { Block, calculateHash } from './Block';
 
 export class Miner {
     @observable public minerId: number;
+    @observable public mining: boolean = false;
     static readonly DIFFICULTY_PREFIX: string = '00';
     static readonly MINING_ATTEMPT_INTERVAL_MS: number = 10;
 
@@ -21,8 +22,10 @@ export class Miner {
 
     private doMining = async () => {
         if (this.blocks.length == 0) {
+            this.mining = false;
             return;
         }
+        this.mining = true;
 
         let curBlock = this.blocks[0];
         curBlock.nonce = _.isNil(curBlock.nonce) ? 0 : curBlock.nonce+1;

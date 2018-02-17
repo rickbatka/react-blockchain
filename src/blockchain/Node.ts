@@ -1,17 +1,19 @@
 import { observable } from 'mobx';
 import { Network } from './Network';
-import { Block, genesisBlock, validateHash } from './Block';
+import { Block, genesisBlock, validateHash, createBlock } from './Block';
 
 export interface BNode{
     nodeId: number;
     blocks: Block[];
     initialized: Promise<boolean>;
+    onBlockAdded: (block: Block) => void;
     onBlockMined: (block: Block) => boolean;
+    submitNewBlock: (data: string) => void;
 }
 
 export class node implements BNode{
     @observable public nodeId: number;
-    @observable public blocks: Block[];
+    @observable public blocks: Block[] = [];
     public initialized: Promise<boolean>;
 
     constructor(nodeId: number){
@@ -25,9 +27,7 @@ export class node implements BNode{
         let allNodes = Network.queryNodes.get();
         if(allNodes.length == 0){
             this.logAction(`...no nodes. initiating genesis block...`);
-            let genesis = genesisBlock();
-            this.blocks = [genesis];
-            Network.broadcastUnminedBlock(genesis, this.nodeId);
+            this.addBlock(genesisBlock());
         }else{
             this.logAction(`...found ${allNodes.length} nodes, finding longest valid blockchain...`);
             this.blocks = node.getBlockchain(allNodes); 
@@ -36,6 +36,15 @@ export class node implements BNode{
         this.logAction(`online. chain height ${this.blocks.length}.`);
 
         return true;
+    };
+
+    public submitNewBlock = (data: string) => {
+        this.addBlock(createBlock(this.blocks.length, this.blocks[this.blocks.length - 1].hash, data));
+    };
+
+    private addBlock = (block: Block) => {
+        this.blocks.push(block);
+        Network.broadcastUnminedBlock(block, this.nodeId);
     };
 
     private static getBlockchain = (nodes: BNode[]) => {
@@ -53,7 +62,7 @@ export class node implements BNode{
     }
 
     public onBlockAdded = (block: Block) => {
-        if (block.index == this.blocks.length + 1 && block.previousHash == this.blocks[this.blocks.length].hash) {
+        if (block.index == this.blocks.length && block.previousHash == this.blocks[this.blocks.length-1].hash) {
             this.blocks.push(<Block>{ ...block });
             return true;
         }

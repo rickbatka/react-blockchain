@@ -5,7 +5,7 @@ import { Miner } from './Miner';
 
 export module Network{
     let nodes : BNode[] = observable([]);
-    let miners: Miner[] = observable([]);
+    export let miners: Miner[] = observable([]);
     export let queryNodes = computed(() => nodes);
 
     export const addNode = async () => {
@@ -26,6 +26,9 @@ export module Network{
     };
 
     export const broadcastUnminedBlock = (block: Block, fromNodeId: number) => {
+        for (let node of nodes) {
+            node.onBlockAdded(block);
+        }
         for (let m of miners) {
             m.onUnminedBlockAdded(block);
         }

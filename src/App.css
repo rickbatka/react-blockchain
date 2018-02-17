@@ -47,7 +47,7 @@
 #footer-content {
     border-top: 1px solid lightgray;
     width: 100%;
-    height: 130px;
+    height: 160px;
     overflow-y: scroll;
     margin: 0;
     padding: 10px;
@@ -59,7 +59,7 @@
 }
 
 li.node, ul.blockchain li {
-    height: 130px;
+    height: 160px;
     padding: 8px;
     margin-top: 5px;
     word-wrap: break-word;
@@ -69,15 +69,27 @@ li.node {
     border-bottom: 1px solid lightgray;
 }
 
+li.miner {
+    background: lightsteelblue;
+}
+
+li.miner.found {
+    background: lightgreen;
+}
+
 ul.blockchain {
-    display: inline;
+    text-align: left;
+    width: 250px;
 }
 
 ul.blockchain li {
+    display: inline-block;
     width: 250px;
     text-align: left;
     font-size: 11px;
     font-family: monospace;
+    overflow: hidden;
+    margin-left: 10px;
 }
 
 

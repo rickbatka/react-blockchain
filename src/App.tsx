@@ -1,11 +1,11 @@
 import * as React from 'react';
 import './App.css';
 import 'bulma/css/bulma.css';
-//import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import { Network } from './blockchain/Network';
 import { NodeView } from './blockchain/NodeView';
 import { BlockView } from './blockchain/BlockView';
+import { MinerView } from './blockchain/MinerView';
 
 const logo = require('./logo.svg');
 
@@ -17,14 +17,17 @@ class App extends React.Component {
         Network.addMiner();
         Network.addNode();
         window.setTimeout(Network.addNode, 500);
-        window.setTimeout(() => {
-            
-        }, 1500);
+        document.addEventListener('keydown', (e) => {
+            if (e.key == 'b') {
+                Network.queryNodes.get()[0].submitNewBlock(`another block with some data`);
+            }
+        });
 
     }
 
     render() {
         let allNodes = Network.queryNodes.get();
+        
         return (
             <div className="App">
                 <header className="App-header">
@@ -46,7 +49,7 @@ class App extends React.Component {
                     <div className="column middle is-three-fifths">
                         <h1 className="subheader">Blocks</h1>
                         {allNodes.map(n =>
-                            <ul className="blockchain" key={n.nodeId}>
+                            <ul className="blockchain" key={n.nodeId} style={{ width: `${265*n.blocks.length}px` }}>
                                 {n.blocks.map(b =>
                                     <BlockView block={b} key={b.index} />
                                 )}
@@ -58,6 +61,11 @@ class App extends React.Component {
                         <h1 className="subheader">
                             Miners
                         </h1>
+                        <ul>
+                            {Network.miners.map(m =>
+                                <MinerView miner={m} key={m.minerId} />
+                            )}
+                        </ul>
                     </div>
                 </div>
                 <div id="footer-content">
